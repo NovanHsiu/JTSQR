@@ -1,14 +1,14 @@
 JTSQR: Hadoop MapReduce Tall-and-Skinny QR Factorization written in Java
-===
 Version 1.0
 Distributed in 2014/02/07
-Hsiu-Cheng Yu, Che-Rung Lee
+===
+
+### Hsiu-Cheng Yu, Che-Rung Lee
 
 
-Introduction
--------------
-The function provided by this package is the computation of QR factorizations for Tall-and-Skinny matrices (TSQR) using MapReduce. 
-
+# Introduction
+----------------
+The function provided by this package is the computation of QR factorizations for Tall-and-Skinny matrices (TSQR) using MapReduce.  
 A 'Tall-and-Skinny matrix' has the property that its number of rows is much bigger than its number of columns. 
 The TSQR function can be used to solve many problems, such as stochastic SVD (SSVD).
 
@@ -20,7 +20,7 @@ In this implementation, we provide three functions:
 
 This code is written in Java and uses JLAPACK and JBLAS library for matrix computation.
 
-Environment Setup
+# Environment Setup
 --------
 This code is for Linux systems.  It is built based on several packages. Make sure those packages are properly installed before using this package.
 
@@ -28,9 +28,9 @@ This code is for Linux systems.  It is built based on several packages. Make sur
  * matrix-toolkits-java (available on https://github.com/fommil/matrix-toolkits-java)
  * JLAPACK and JBLAS (available on http://www.netlib.org/java/f2j/)
 
-Compiling 
-----------
-There are three paths to setup in Makefile: `HADOOP_HOME`, `MTJ` and `JLAPACK_JBLAS`.
+# Compiling 
+--------------
+There are three paths to setup in Makefile: “HADOOP_HOME”, “MTJ” and “JLAPACK_JBLAS”.
 
  - HADOOP_HOME
    Path where Hadoop is installed.
