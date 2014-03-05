@@ -26,19 +26,23 @@ This code is for Linux systems.  It is built based on several packages. Make sur
 
  * Hadoop 1.x version (available on http://hadoop.apache.org/)
  * matrix-toolkits-java (available on https://github.com/fommil/matrix-toolkits-java)
- * JLAPACK and JBLAS (available on http://www.netlib.org/java/f2j/)
+ * JLAPACK, JBLAS and F2JUTLI (available on http://www.netlib.org/java/f2j/)
 
 # Compiling 
 --------------
-There are three paths to setup in Makefile: “HADOOP_HOME”, “MTJ” and “JLAPACK_JBLAS”.
+There are five paths need to setup in Makefile: “HADOOP_HOME”, “MTJ”, “JLAPACK”, "JBLAS" and "JUTIL".
 
  - HADOOP_HOME
    Path where Hadoop is installed.
- - MTJ_HOME 
+ - MTJ 
   Path where matrix-toolkits-java is installed.
- - JLAPACK_JBLAS_HOME
-  Path where JLAPACK and JBLAS are installed.
-
+ - JLAPACK
+  Path where is lapack.jar package
+ - JBLAS
+  Path where is blas.jar package
+ - JUTIL
+  Path where is f2jutil.jar package
+  
 The Makefile have two commands.
  (1) $ make
      Compiling and packaging all class files into a JAR file
@@ -49,9 +53,14 @@ The Makefile have two commands.
 # Usage Example and Command Line Arguments
 ----------------------------------------------------
 
- $(MTJ_PATH)
-  Path of matrix-toolkits-java
-  In this example JLAPACK, JBLAS and matrix-toolkits-java are all in one package: It is called mtj-version.jar.
+ $(MTJ)
+  Path of matrix-toolkits-java package
+ $(JLAPACK)
+  Path where is lapack.jar package
+ $(JBLAS)
+  Path where is blas.jar package
+ $(JUTIL)
+  Path where is f2jutil.jar package
  $(HADOOP_HOME)
   Path where Hadoop is installed
  $(TSQR_PACKAGE)
@@ -67,6 +76,7 @@ If you want to use other matrices for this code, the format of matrices must fol
 ## Example: Run TSQR
 ### Do QR Factorization only
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.TSQRunner \
+ -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
  -input mat/100x5 \
  -output tsqrOutput \
  -subRowSize 10 \
@@ -77,6 +87,7 @@ If you want to use other matrices for this code, the format of matrices must fol
 
 ### Compute Q^T*A
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.TSQRunner \
+ -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
  -input mat/100x5 \
  -output tsqrOutput \
  -inputB mat/100x5 \
@@ -89,6 +100,8 @@ If you want to use other matrices for this code, the format of matrices must fol
 #### Arguments for Run TSQR
 The argument has star mark * means that it must be given a value by user and other arguments without star mark have default value.
 
+ -libjar *
+  Path of imported libraries.
  -input *
   Input file, including its directory.
  -inputB *
@@ -112,6 +125,7 @@ The argument has star mark * means that it must be given a value by user and oth
 ## Example: Run SSVD
 ### Run SSVD
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.ssvd.SSVDRunner \
+ -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
  -input mat/100kx500 \
  -output tsqrOutput \
  -subRowSize 4000 \
@@ -130,6 +144,7 @@ The argument has star mark * means that it must be given a value by user and oth
 
 ## Example: Turn the matrix from Hadoop sequencefile into text file and then print out 
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.rs.readSFMat \
+ -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
  –input tsqrOutput/part-00000
 
 # Tuning Suggestion of Arguments
