@@ -76,7 +76,7 @@ If you want to use other matrices for this code, the format of matrices must fol
 ## Example: Run TSQR
 ### Do QR Factorization only
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.TSQRunner \
- -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
+ -libjars '$(MTJ),$(JLAPACK),$(JBLAS),$(JUTIL)' \
  -input mat/100x5 \
  -output tsqrOutput \
  -subRowSize 10 \
@@ -87,7 +87,7 @@ If you want to use other matrices for this code, the format of matrices must fol
 
 ### Compute Q^T*A
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.TSQRunner \
- -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
+ -libjars '$(MTJ),$(JLAPACK),$(JBLAS),$(JUTIL)' \
  -input mat/100x5 \
  -output tsqrOutput \
  -inputB mat/100x5 \
@@ -125,7 +125,7 @@ The argument has star mark * means that it must be given a value by user and oth
 ## Example: Run SSVD
 ### Run SSVD
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.ssvd.SSVDRunner \
- -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
+ -libjars '$(MTJ),$(JLAPACK),$(JBLAS),$(JUTIL)' \
  -input mat/100kx500 \
  -output tsqrOutput \
  -subRowSize 4000 \
@@ -144,7 +144,7 @@ The argument has star mark * means that it must be given a value by user and oth
 
 ## Example: Turn the matrix from Hadoop sequencefile into text file and then print out 
  ${HADOOP_HOME}/bin/hadoop jar ${TSQR_PACKAGE}/TSQR.jar nthu.scopelab.tsqr.rs.readSFMat \
- -libjars '$(MTJ):$(JLAPACK):$(JBLAS):$(JUTIL)' \
+ -libjars '$(MTJ),$(JLAPACK),$(JBLAS),$(JUTIL)' \
  –input tsqrOutput/part-00000
 
 # Tuning Suggestion of Arguments
