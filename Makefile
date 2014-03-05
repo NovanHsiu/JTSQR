@@ -1,7 +1,9 @@
 HADOOP_HOME := /opt/hadoop
-MTJ := /opt/hadoop/lib/mtj-0.9.9.jar
-JLAPACK_JBLAS := /home/hadoop
-COMPILE := $(shell ./compile $(HADOOP_HOME) $(MTJ) $(JLAPACK_JBLAS))
+MTJ := /home/hadoop/javalib/mtj-0.9.14.jar
+JLAPACK := /home/hadoop/javalib/jlapack-0.8/lapack.jar
+JBLAS := /home/hadoop/javalib/jlapack-0.8/blas.jar
+JUTIL := /home/hadoop/javalib/jlapack-0.8/f2jutil.jar
+COMPILE := $(shell ./compile $(HADOOP_HOME) $(MTJ) $(JLAPACK) $(JBLAS) $(JUTIL))
 all: TSQR
 	$(COMPILE)
 	jar -cvf TSQR.jar -C TSQR/ .
