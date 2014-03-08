@@ -19,15 +19,11 @@
 package nthu.scopelab.tsqr.ssvd;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.NullWritable;
-import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.util.ToolRunner;
 
@@ -136,7 +132,7 @@ public class SSVDRunner extends TSQRunner {
         System.out.println("Required argument '-subRowSize' missing");
         return -1;
     }
-	String mis_str = getArgument("-MaxInputSplitSize",args);
+	String mis_str = getArgument("-mis",args);
 	if (mis_str == null) {
         mis_str = "64";
     }
