@@ -177,21 +177,24 @@ public class VJob {
 		if(submatrix == null)
 		{
 		 submatrix = new cmDenseMatrix(new double[mn*2],rowbuffersize,k);
+		 longArray = new long[rowbuffersize*2];
 		}
 		else if(submatrix.getData().length<mn)
 		{
 		 submatrix = new cmDenseMatrix(new double[mn*2],rowbuffersize,k);
+		 longArray = new long[rowbuffersize*2];
 		}
 		 
 		
 		//set the output value
 		for(int i=0;i<rowbuffersize;i++)
 		{
+		 longArray[i] = (long)curIdBuffer.remove(0).intValue();
 		 submatrix.setRow(i,curRowBuffer.remove(0).getData());
 		}
 		//write context
 		ovalue.set(submatrix);
-		context.write(new LongWritable((long)curIdBuffer.get(0)),ovalue);
+		context.write(new LongWritable(longArray[0]),ovalue);
 	  }
       // V inherits original A column(item) labels.
     }
@@ -206,19 +209,22 @@ public class VJob {
 	 if(submatrix == null)
 	 {
 		submatrix = new cmDenseMatrix(new double[mn*2],rowbuffersize,k);
+		longArray = new long[rowbuffersize*2];
 	 }
 	 else if(submatrix.getData().length<mn)
 	 {
 		submatrix = new cmDenseMatrix(new double[mn*2],rowbuffersize,k);
+		longArray = new long[rowbuffersize*2];
 	 }
 	 //set the output value
 	 for(int i=0;i<rowbuffersize;i++)
 	 {
+	  longArray[i] = (long)curIdBuffer.remove(0).intValue();
 	  submatrix.setRow(i,curRowBuffer.remove(0).getData());	  
 	 }
 	 //write context
 	 ovalue.set(submatrix);
-	 context.write(new LongWritable((long)curIdBuffer.get(0)),ovalue);
+	 context.write(new LongWritable(longArray[0]),ovalue);
 	 }
 	}
 
