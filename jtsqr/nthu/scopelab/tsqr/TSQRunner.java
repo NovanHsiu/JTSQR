@@ -286,8 +286,12 @@ public class TSQRunner extends Configured implements Tool {
 	 DatanodeInfo[] live = dfs.getClient().datanodeReport(DatanodeReportType.LIVE);
 	 
 	 String mapredheap_str = fs.getConf().get("mapred.child.java.opts");
-	 long mapredheap = Long.valueOf(mapredheap_str.substring(mapredheap_str.indexOf("x")+1,mapredheap_str.lastIndexOf("M")-1))*1024*1024;
-	 	 
+	 String lastchar = String.valueOf(mapredheap_str.charAt(mapredheap_str.length()-1));
+         long mapredheap = Long.valueOf(mapredheap_str.replaceAll("[^0-9]*",""));
+         if(lastchar.matches("[mM]+"))
+          mapredheap = mapredheap*1024*1024;
+         else
+          mapredheap = mapredheap*1024*1024*1024;
 	 //(physical machine free memory) > (mpared child heap size)*(datasize/mis+1)/(# of data nodes)
 	 // Free Memory > Required Memory for per node (Assume free memory of master node and slave node are equal, because it only detect memory usage of master node.)
 	 //System.out.println("FreeMemory: "+freememory+", RequiredMemory: "+mapredheap*(datasize/lmis+1)/live.length+" for per node of cluster");
