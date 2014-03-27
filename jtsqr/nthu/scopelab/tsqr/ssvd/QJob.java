@@ -106,7 +106,7 @@ public final class QJob{
 		private Reporter reporter;
 		private int kp;
 		private cmDenseMatrix subY = null;
-		
+		private LMatrixWritable ovalue;	
 		@Override
 		public void configure(JobConf job){
 		 int k = Integer.parseInt(job.get(PROP_K));
@@ -114,13 +114,13 @@ public final class QJob{
 		 kp = k + p;
 		 long omegaSeed = Long.parseLong(job.get(PROP_OMEGA_SEED));
 		 omega = new Omega(omegaSeed, k, p);
+		 ovalue = new LMatrixWritable();
 		 super.configure(job);
         }
 		
     public void map(IntWritable key, MatrixWritable value, OutputCollector<IntWritable, MatrixWritable> output, Reporter reporter)
       throws IOException{
 	  this.reporter = reporter;
-	  MatrixWritable lvalue = (MatrixWritable) value;	  
 	  FlexCompRowMatrix subAs = null;
 	  cmDenseMatrix subAd = null;
 	  int subANumRows = -1;
@@ -131,8 +131,8 @@ public final class QJob{
 	  }
 	  else
 	  {
-	    subAd = value.getDense();
-		subANumRows = subAd.numRows();
+	    	subAd = value.getDense();
+	    	subANumRows = subAd.numRows();
 	  }
 	  
 	  if(subY==null)
@@ -150,9 +150,8 @@ public final class QJob{
 	   {
 	    omega.computeY(subAd,subY);
 	   }
-	  lvalue.set(subY);
-	  
-	  super.collect(key,lvalue,output);
+	  ovalue.setLMat(value.getLongArray(),subY);
+	  super.collect(key,ovalue,output);
     }
 	
 	@Override
