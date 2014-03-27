@@ -139,7 +139,8 @@ public final class QJob{
 	   subY = new cmDenseMatrix(new double[subANumRows*kp*2],subANumRows,kp);
 	  else if(subY.getData().length<subANumRows*kp)
 	   subY = new cmDenseMatrix(new double[subANumRows*kp*2],subANumRows,kp);
-	   
+	  else
+	   subY.set(subY.getData(),subANumRows,kp);
 	  //get the Y sub matrix  from A sub matrix * omega
 	  //computeY
 	   if(!value.isDense())
