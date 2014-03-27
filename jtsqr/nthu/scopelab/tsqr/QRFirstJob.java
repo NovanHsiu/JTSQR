@@ -181,23 +181,25 @@ public static class MergeJob extends MapReduceBase
 			//output the Q and R
 			
 			//output Q
-			 int curindex = 0;
-			 double[] splitmatrix = new double[matRowSize_buffer.get(0)*numCols*2];
-			 cmDenseMatrix outputSplitQ = new cmDenseMatrix();
-			 int srow_size, mat_size;
+			 int curRowIndex = 0;
+			 cmDenseMatrix outputSplitQ = new cmDenseMatrix(new double[matRowSize_buffer.get(0)*numCols*2],matRowSize_buffer.get(0),numCols);
+			 int srow_size;
+			 
 			 //split matrix
 			 while(!key_buffer.isEmpty())
 			 {
 			  srow_size =  matRowSize_buffer.remove(0);
-			  mat_size = srow_size*numCols;
 			  
-			  for(int i=0;i<mat_size;i++)
-			   splitmatrix[i] = outputQ.getData()[i+curindex];
+			  outputSplitQ.set(outputSplitQ.getData(),srow_size,numCols);
+			  for(int i=0;i<srow_size;i++)
+			   for(int j=0;j<numCols;j++)
+			    outputSplitQ.set(i,j,outputQ.get(i+curRowIndex,j));
+				
 			  okey.set(key_buffer.remove(0));
-			  outputSplitQ.set(splitmatrix,srow_size,numCols);
 			  ovalue.set(outputSplitQ);
 			  qmos.getCollector(QF_MAT,null).collect(okey,ovalue);
-			  curindex+=mat_size;
+			  
+			  curRowIndex+=srow_size;
 			 }
 			 
 			 qmos.close();
