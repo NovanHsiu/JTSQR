@@ -184,7 +184,10 @@ public class VJob {
 		 submatrix = new cmDenseMatrix(new double[mn*2],rowbuffersize,k);
 		 longArray = new long[rowbuffersize*2];
 		}
-		 
+		else
+	 	{
+	  	 submatrix.set(submatrix.getData(),rowbuffersize,k);
+	 	}
 		
 		//set the output value
 		for(int i=0;i<rowbuffersize;i++)
@@ -215,6 +218,10 @@ public class VJob {
 	 {
 		submatrix = new cmDenseMatrix(new double[mn*2],rowbuffersize,k);
 		longArray = new long[rowbuffersize*2];
+	 }
+	 else
+	 {
+	  submatrix.set(submatrix.getData(),rowbuffersize,k);
 	 }
 	 //set the output value
 	 for(int i=0;i<rowbuffersize;i++)
