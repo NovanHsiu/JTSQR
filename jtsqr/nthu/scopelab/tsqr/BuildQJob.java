@@ -206,7 +206,10 @@ public class BuildQJob extends TSQRunner{
 			{
 			 Q = new cmDenseMatrix(new double[value.getDense().numRows()*value.getDense().numColumns()*2],value.getDense().numRows(),value.getDense().numColumns());
 			}
-			
+			else
+			{
+			 Q = Q.set(Q.getData(),value.getDense().numRows(),value.getDense().numColumns());
+			}
 			cmDenseMatrix firstQ = value.getDense();
 			while(!QList.isEmpty())
 			{
