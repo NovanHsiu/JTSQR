@@ -226,6 +226,9 @@ public static class MultiplyMapper //only work on iteration 1 (index 0)
 			 QtB = new cmDenseMatrix(new double[qcn*acn*2],qcn,acn);
 			else if(QtB.getData().length<qcn*acn)
 			 QtB = new cmDenseMatrix(new double[qcn*acn*2],qcn,acn);
+			else 
+			 QtB.set(QtB.getData(),qcn,acn);
+			 
 			if(Runtime.getRuntime().freeMemory()<initMemory/2)//debug
 		     throw new NullPointerException("cp2: OOM!");
 			QtB = QRFactorMultiply.Multiply("T","N",Q,value.getDense(),QtB);
