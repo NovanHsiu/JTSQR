@@ -148,6 +148,8 @@ public class UJob {
 			 Umat = new cmDenseMatrix(new double[vm*hn*2],vm,hn);
 			else if(Umat.getData().length<vm*hn)
 			 Umat = new cmDenseMatrix(new double[vm*hn*2],vm,hn);
+			else
+			 Umat.set(Umat.getData(),vm,hn);
 			 
 			value.set(QRFactorMultiply.Multiply("N","N",value.getDense(),uHat,Umat));
 						
