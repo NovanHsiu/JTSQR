@@ -141,6 +141,7 @@ public class ABtDenseOutJob{
 		private Configuration localFsConfig;
 		private Path BtPath;
 		private FileSystem fs;
+		private LMatrixWritable ovalue = new LMatrixWritable();
 		private List<Vector> Btlist = new ArrayList<Vector>();
 		private List<Integer> BtIndexlist = new ArrayList<Integer>();
 		
@@ -204,8 +205,8 @@ public class ABtDenseOutJob{
 
 			}//i<yiRows.numRows()
 			
-			value.set(yiRows);
-			output.collect(key,value);			
+			ovalue.set(value.getLongArray(),yiRows);
+			output.collect(key,ovalue);			
         }//map
 		
 		public void preloadBt(MatrixWritable value) throws IOException 
