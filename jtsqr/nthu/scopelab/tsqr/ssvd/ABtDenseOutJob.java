@@ -205,7 +205,7 @@ public class ABtDenseOutJob{
 
 			}//i<yiRows.numRows()
 			
-			ovalue.set(value.getLongArray(),yiRows);
+			ovalue.setLMat(value.getLongArray(),yiRows);
 			output.collect(key,ovalue);			
         }//map
 		
