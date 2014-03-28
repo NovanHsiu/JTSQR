@@ -126,14 +126,15 @@ public class UJob {
         extends MapReduceBase implements Mapper<IntWritable, MatrixWritable, LongWritable, MatrixWritable>{
 	protected FileStatus[] basicv;
 	protected FileSystem fs;
-    private DenseVector uRow;
-    private VectorWritable uRowWritable;
-    private int kp;
-    private int k, vm ,vn,hm,hn;
-    private Vector sValues;
+	 private DenseVector uRow;
+    	private VectorWritable uRowWritable;
+    	private int kp;
+	private int k, vm ,vn,hm,hn;
+	private Vector sValues;
 	private final LongWritable okey = new LongWritable();
 	private cmDenseMatrix Umat = null;
 	private cmDenseMatrix uHat;
+	private LMatrixWritable ovalue = new LMatrixWritable();
 	
     @Override
     public void map(IntWritable key, MatrixWritable value, OutputCollector<LongWritable, MatrixWritable> output, Reporter reporter) 
@@ -151,10 +152,10 @@ public class UJob {
 			else
 			 Umat.set(Umat.getData(),vm,hn);
 			 
-			value.set(QRFactorMultiply.Multiply("N","N",value.getDense(),uHat,Umat));
-						
+			Umat = QRFactorMultiply.Multiply("N","N",value.getDense(),uHat,Umat);
+			ovalue.setLMat(value.getLongArray(),Umat);			
 			okey.set((long)key.get());
-			output.collect(okey,value);	
+			output.collect(okey,ovalue);	
     }
 
      @Override
