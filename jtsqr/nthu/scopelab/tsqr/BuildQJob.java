@@ -130,8 +130,6 @@ public class BuildQJob extends TSQRunner{
 	 protected cmDenseMatrix Q = null;
 	 private List<cmDenseMatrix> QList = new ArrayList<cmDenseMatrix>();
 	 private List<Map<Integer,QIndexPair>> QIndexMapList = new ArrayList<Map<Integer,QIndexPair>>();
-	 private IntWritable key = null;
-	 private MatrixWritable value = null;
 	@Override
 	public void configure(JobConf job)
 	{
@@ -225,6 +223,7 @@ public class BuildQJob extends TSQRunner{
 		private long start, end;
 		private long confstart, mapstart, time1, time2, mapAcc = 0;
 		private long computationTime = 0, tag0, tag1;
+		private MatrixWritable ovalue = new MatrixWritable();
 		private Reporter reporter;
 		
 		@Override
@@ -245,8 +244,8 @@ public class BuildQJob extends TSQRunner{
 			this.reporter = reporter;
 			tag0 = new Date().getTime();
 			BuildQ(key,value);
-			value.set(Q);
-			output.collect(key,value);
+			ovalue.set(Q);
+			output.collect(key,ovalue);
 			tag1 = new Date().getTime();
 			computationTime+=tag1-tag0;
         }
