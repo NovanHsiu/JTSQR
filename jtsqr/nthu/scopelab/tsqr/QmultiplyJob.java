@@ -158,8 +158,7 @@ public class QmultiplyJob extends TSQRunner{
 		}		
 		}
 		
-		@Override
-		public void BuildQ(IntWritable key, MatrixWritable value) throws IOException{
+		public void BuildQ(IntWritable key) throws IOException{
 			//find the first QF matrix
 			SequenceFile.Reader reader = null;
 			IntWritable lkey;
