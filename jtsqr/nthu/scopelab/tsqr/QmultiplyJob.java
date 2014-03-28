@@ -189,7 +189,9 @@ public static class MultiplyMapper //only work on iteration 1 (index 0)
 		private boolean outputQ;
 		private cmDenseMatrix QtB = null;
 		private MultipleOutputs mos;
+		private MatrixWritable ovalue = new MatrixWritable();
 		private long initMemory = 0;//debug
+		
 		@Override
 		public void configure(JobConf job){
 		 initMemory = Runtime.getRuntime().freeMemory();
@@ -215,8 +217,8 @@ public static class MultiplyMapper //only work on iteration 1 (index 0)
 			BuildQ(key,value);
 			if(outputQ)
 			{
-			  value.set(Q);
-			  mos.getCollector(Q_MAT, null).collect(key, value);
+			  ovalue.set(Q);
+			  mos.getCollector(Q_MAT, null).collect(key, ovalue);
 			}
 			//do Qt x B multiplication
 			int qcn = Q.numColumns();
@@ -234,8 +236,8 @@ public static class MultiplyMapper //only work on iteration 1 (index 0)
 			if(Runtime.getRuntime().freeMemory()<initMemory/2)//debug
 		     throw new NullPointerException("cp3: OOM!");
 			
-			value.set(QtB);
-			output.collect(key,value);
+			ovalue.set(QtB);
+			output.collect(key,ovalue);
         }
 		
 		@Override
