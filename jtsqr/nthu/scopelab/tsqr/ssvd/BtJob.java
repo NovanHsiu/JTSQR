@@ -183,6 +183,7 @@ public class BtJob extends TSQRunner{
 		private long confstart, mapstart, time1, time2, setBtAcc = 0, mapAcc = 0;
 		private long computationTime = 0, tag0, tag1;
 		private boolean outputQ;
+		private LMatrixWritable ovalue = new LMatrixWritable();
 		private Reporter reporter;
 		
 		@Override
@@ -225,7 +226,7 @@ public class BtJob extends TSQRunner{
 			tag0 = mapstart;
 			
 			//Build Q
-			BuildQ(key,value);
+			BuildQ(key);
 			
 			this.reporter = reporter;
 			btCollector.setDelegate(output);
@@ -269,7 +270,7 @@ public class BtJob extends TSQRunner{
 			 setBtAcc+=time2-time1;
 			 if(outputQ)
 			 {
-			  value.set(Q);
+			  ovalue.setLMat(value.getLongArray(),Q);
 			  mos.getCollector(QmultiplyJob.Q_MAT, null).collect(key, value);
 			 }
 			 time2 = new Date().getTime();
